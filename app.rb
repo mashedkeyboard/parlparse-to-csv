@@ -70,6 +70,7 @@ get '/' do
       name: name_at(person, m[:start_date]),
       identifier__historichansard: person[:identifiers].to_a.find(->{{}}) { |id| id[:scheme] == 'historichansard_person_id' }[:identifier],
       identifier__datadotparl: person[:identifiers].to_a.find(->{{}}) { |id| id[:scheme] == 'datadotparl_id' }[:identifier],
+      identifier__parlparse: person[:id],
       constituency: post[:area][:name],
       constituency_id: post[:id],
       party: party[:name],
