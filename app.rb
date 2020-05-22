@@ -43,7 +43,7 @@ get '/' do
     if names.count == 1
       return display_name(names.first)
     else
-      return display_name(names.max_by(&:start_date))
+      return display_name(names.select{|v| v.has_key?(:note) && v[:note] == "Main"}.max_by(&:start_date))
     end
   end
 
