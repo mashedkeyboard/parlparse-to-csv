@@ -39,11 +39,11 @@ get '/' do
   end
 
   def get_name(p)
-    names = p[:other_names]
+    names = p[:other_names].select{|v| v.has_key?(:note) && v[:note] == "Main"}
     if names.count == 1
       return display_name(names.first)
     else
-      return display_name(names.select{|v| v.has_key?(:note) && v[:note] == "Main"}.max_by(&:start_date))
+      return display_name(names.max_by{|v| v[:start_date] || -1 })
     end
   end
 
