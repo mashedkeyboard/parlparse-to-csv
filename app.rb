@@ -43,7 +43,7 @@ get '/' do
     if names.count == 1
       return display_name(names.first)
     else
-      return display_name(names.max_by{|v| v[:start_date] || -1 })
+      return display_name(names.max_by{|v| v[:start_date] || "0000-00-00" })
     end
   end
 
