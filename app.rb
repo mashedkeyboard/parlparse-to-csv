@@ -38,13 +38,8 @@ get '/' do
     name[:given_name] + " " + name[:family_name]
   end
 
-  def name_at(p, date)
-    date = DateTime.now.to_date.to_s if date.to_s.empty?
-    at_date = p[:other_names].find_all { |n| 
-      n[:note].to_s == 'Main' && (n[:end_date] || '9999-99-99') >= date && (n[:start_date] || '0000-00-00') <= date 
-    }
-    raise "Too many names at #{date}: #{at_date}" if at_date.count > 1
-    return display_name(at_date.first)
+  def get_name(p)
+    return display_name(p[:other_names].last) # get last-known name
   end
 
   def term_id(m)
@@ -67,7 +62,7 @@ get '/' do
 
     data = {
       id: person[:id].split('/').last,
-      name: name_at(person, ""),
+      name: get_name(person),
       identifier__historichansard: person[:identifiers].to_a.find(->{{}}) { |id| id[:scheme] == 'historichansard_person_id' }[:identifier],
       identifier__datadotparl: person[:identifiers].to_a.find(->{{}}) { |id| id[:scheme] == 'datadotparl_id' }[:identifier],
       identifier__parlparse: person[:id],
