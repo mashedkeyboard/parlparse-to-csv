@@ -67,7 +67,7 @@ get '/' do
 
     data = {
       id: person[:id].split('/').last,
-      name: name_at(person, m[:start_date]),
+      name: name_at(person),
       identifier__historichansard: person[:identifiers].to_a.find(->{{}}) { |id| id[:scheme] == 'historichansard_person_id' }[:identifier],
       identifier__datadotparl: person[:identifiers].to_a.find(->{{}}) { |id| id[:scheme] == 'datadotparl_id' }[:identifier],
       identifier__parlparse: person[:id],
