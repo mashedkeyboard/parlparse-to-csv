@@ -39,7 +39,12 @@ get '/' do
   end
 
   def get_name(p)
-    return display_name(p[:other_names].last) # get last-known name
+    names = p[:other_names]
+    if names.count == 1
+      return display_name(names.first)
+    else
+      return display_name(names.max_by(&:start_date))
+    end
   end
 
   def term_id(m)
